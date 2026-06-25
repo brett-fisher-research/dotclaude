@@ -13,9 +13,7 @@
       "Read(.env.local*)",
       "Edit(.env.local*)",
       "Read(~/.aws/**)",
-      "Read(~/.ssh/*ed25519*)",
-      "Read(.fr.config)",
-      "Read(.kadoji.config)"
+      "Read(~/.ssh/*ed25519*)"
     ]
   },
   "enabledPlugins": {},
