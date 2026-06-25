@@ -1,0 +1,9 @@
+# Ignore everything in ~/.claude by default — this directory holds a lot of
+# machine-local state (credentials, history, sessions, caches, projects, etc.).
+*
+
+# ...except the things worth version-controlling and sharing across machines:
+!.gitignore
+!settings.json
+!skills/
+!skills/**

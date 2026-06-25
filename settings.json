@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch"
+    ],
+    "deny": [
+      "Read(.env)",
+      "Edit(.env)",
+      "Read(.env.dev)",
+      "Edit(.env.dev)",
+      "Read(.env.prod)",
+      "Edit(.env.prod)",
+      "Read(.env.local*)",
+      "Edit(.env.local*)",
+      "Read(~/.aws/**)",
+      "Read(~/.ssh/*ed25519*)",
+      "Read(.fr.config)",
+      "Read(.kadoji.config)"
+    ]
+  },
+  "enabledPlugins": {},
+  "effortLevel": "medium",
+  "voice": {
+    "enabled": true,
+    "mode": "hold"
+  },
+  "skipAutoPermissionPrompt": true,
+  "voiceEnabled": true,
+  "tui": "fullscreen"
+}
