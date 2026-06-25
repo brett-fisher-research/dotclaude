@@ -13,7 +13,7 @@
       "Read(.env.local*)",
       "Edit(.env.local*)",
       "Read(~/.aws/**)",
-      "Read(~/.ssh/*ed25519*)"
+      "Read(~/.ssh/**)"
     ]
   },
   "enabledPlugins": {},
