@@ -1,5 +1,5 @@
 ---
-name: dotfiles
+name: dot
 description: Manage the user's home-directory dotfiles, which are version-controlled in a bare git repository accessed via the `cfg` alias (NOT plain `git`). Use whenever working with tracked dotfiles in the home directory (e.g. ~/.zshrc, ~/.config/*), checking dotfile status/diffs, or committing and pushing config changes.
 ---
 
@@ -40,18 +40,3 @@ CFG status
 
 (Defining a function named `cfg` can collide with the existing alias in zsh — use a different
 name like `CFG`, or run the full `git --git-dir=... --work-tree=...` command directly.)
-
-## Remote
-
-The remote is `git@github.com:brett-fisher-research/dotfiles.git` (SSH).
-
-## What's tracked
-
-Only files explicitly added with `cfg add` are tracked — this is a curated dotfiles repo, not a
-full snapshot of `$HOME`. The repo is ZSH-oriented (e.g. `~/.zshrc`) and primarily targets the
-Linux/WSL2 environment.
-
-> **Note:** `~/.claude/` is **not** part of this dotfiles repo. Claude Code config
-> (`settings.json` and skills) lives in its own separate repository at `~/.claude/`
-> (`git@github.com:brett-fisher-research/dotclaude.git`), so it can be shared across machines
-> independently of the ZSH dotfiles. Use plain `git` inside `~/.claude/` for that repo.
