@@ -16,7 +16,7 @@ and `skills/`, so machine-local state is never touched.
 ```sh
 cd ~/.claude
 git init
-git remote add origin git@github.com:brett-fisher-research/dotclaude.git
+git remote add origin https://github.com/brett-fisher-research/dotclaude.git
 git fetch origin
 
 # Bring in the ignore rules FIRST, so machine-local state is protected
