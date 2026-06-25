@@ -7,75 +7,55 @@ allowed-tools: Bash Read Write Edit
 
 # Start a pull-request workflow
 
-This is the **standard workflow for every code change** in this repo. No code change should
-happen directly on `main` — it always rides on a PR branch created here. The flow is three
-skills:
+Standard workflow for **every** code change. Nothing lands on `main` directly — all work rides a PR branch from here. Three skills:
 
-1. **`/pr`** (this skill) — clean the tree, branch off an up-to-date `main`, then do the work,
-   committing at every step.
-2. **`/raise`** — push the branch and open the PR (only when the user invokes it).
-3. **`/merge`** — squash-merge the PR, return to `main`, and pull (only when the user invokes it).
+1. **`/pr`** (this skill) — clean tree, branch off fresh `main`, do the work, commit every step.
+2. **`/raise`** — push the branch and open the PR.
+3. **`/merge`** — squash-merge, return to `main`, pull.
 
-The work in `$ARGUMENTS` (if given) describes what's about to be built. If invoked bare, infer it
-from the conversation.
+Work to do is in `$ARGUMENTS`; if invoked bare, infer it from the conversation.
 
 ## Steps
 
-1. **Guard against unsaved work on `main`.** Before doing anything, check the working tree:
+1. **Guard against unsaved work on `main`.** Check first:
    ```bash
    git status --porcelain && git branch --show-current
    ```
-   - **If there are uncommitted/untracked changes**, STOP and prompt the user before starting any
-     work. Show them the changes and use `AskUserQuestion` to suggest a course of action:
-     - **Bring them along** — carry the changes onto the new branch (`git stash` → branch →
-       `git stash pop`), if they belong with this work.
-     - **Commit them first** — they're a separate, finished change: commit on the current branch
-       (or its own branch) before proceeding.
-     - **Stash and set aside** — `git stash` and leave them for later.
-     - **Discard** — only if the user explicitly confirms; this is destructive.
-     Do NOT silently proceed over a dirty tree.
-   - **If already on a non-`main` branch** that looks like an in-progress PR branch, ask whether
-     to keep working on it (skip to step 3) or branch fresh off `main`.
+   - **Dirty tree** (uncommitted/untracked): STOP. Show the changes and use `AskUserQuestion`:
+     - **Bring along** — carry onto the new branch (`git stash` → branch → `git stash pop`).
+     - **Commit first** — separate finished change: commit on current branch before proceeding.
+     - **Stash and set aside** — `git stash`, leave for later.
+     - **Discard** — destructive; only on explicit confirmation.
 
-2. **Branch off an up-to-date `main`.** Always sync with the remote first so the branch starts
-   from the latest:
+     Never silently proceed over a dirty tree.
+   - **Already on a non-`main` PR branch**: ask whether to keep working on it (skip to step 3) or branch fresh.
+
+2. **Branch off up-to-date `main`.** Sync the remote first:
    ```bash
    git fetch origin --prune
    git checkout main
    git pull --ff-only
    git checkout -b <type>/<short-slug>
    ```
-   Pick `<type>` as a **loose grouping of the kind of work** — common prefixes:
-   - `feat/` — a new feature or capability
-   - `bug/` — a bug fix
-   - `chore/` — tooling, deps, config, scaffolding, refactors with no behavior change
+   `<type>` = loose grouping of the work:
+   - `feat/` — new feature or capability
+   - `bug/` — bug fix
+   - `chore/` — tooling, deps, config, refactors with no behavior change
    - `docs/` — documentation only
-   …or another short, sensible prefix if none of these fit. `<short-slug>` is kebab-case and
-   describes the work (e.g. `feat/dark-mode-toggle`, `bug/save-modal-autofill`). Confirm the
-   branch: `git branch --show-current`.
+   - …or another short, sensible prefix.
 
-3. **Do the work, committing at EVERY step.** Make the change in logical increments, and commit
-   each increment as you go — not one giant commit at the end:
+   `<short-slug>` is kebab-case (e.g. `feat/dark-mode-toggle`, `bug/save-modal-autofill`). Confirm: `git branch --show-current`.
+
+3. **Do the work, committing at EVERY step** — not one giant commit at the end:
    ```bash
    git add -A && git commit -m "<concise, present-tense message>"
    ```
-   - Each commit should be a coherent, self-contained step (e.g. "scaffold app", "add PWA
-     manifest", "wire up save flow", "fix mobile layout").
-   - **Always end with a clean tree when you hand control back.** Whenever you finish coding and
-     return to the user — to ask a question, report progress, or wait for review — **everything
-     you changed must already be committed.** Never leave uncommitted work sitting in the tree
-     when you yield. Run `git status --porcelain` to confirm it's empty before handing back.
-   - Follow this repo's commit-message convention (short, imperative; see `git log`). End each
-     commit message with the standard co-author trailer.
+   - Each commit = a coherent, self-contained step (e.g. "scaffold app", "wire up save flow").
+   - **Clean tree on every handback.** Whenever you yield to the user — question, progress, review — everything you changed is already committed. Confirm with `git status --porcelain` (empty).
+   - Follow the repo's commit convention (short, imperative; see `git log`). End each message with the standard co-author trailer.
 
-4. **Stop at committed — do NOT push or open a PR.** This skill never runs `git push` or
-   `gh pr create`. The branch stays local with its commits until the user explicitly invokes
-   **`/raise`**. When you've finished the requested work (and committed it), tell the user it's
-   ready and that they can review locally, then run `/raise` when they want the PR opened.
+4. **Stop at committed — do NOT push or open a PR.** Never run `git push` or `gh pr create`. The branch stays local until the user invokes **`/raise`**. When done, tell the user it's ready to review locally, then `/raise` when they want the PR opened.
 
 ## Relationship to other skills
 
-Skills that change code (`/new-experiment`, `/experiment`, `/promote-experiment`, and any future
-code-change skill) **run their work inside this flow**: they invoke `/pr` first to set up the
-branch, commit at every step as above, and leave pushing/PR-opening to `/raise` and `/merge`. See
-`~/claude-experiments/CLAUDE.md` ("Code changes go through the PR workflow").
+Code-changing skills (`/new-experiment`, `/experiment`, `/promote-experiment`, and any future one) **run inside this flow**: invoke `/pr` first, commit every step, leave pushing/PR-opening to `/raise` and `/merge`. See `~/claude-experiments/CLAUDE.md` ("Code changes go through the PR workflow").
