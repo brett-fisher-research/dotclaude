@@ -4,6 +4,7 @@
 
 # ...except the things worth version-controlling and sharing across machines:
 !.gitignore
+!README.md
 !settings.json
 !skills/
 !skills/**
