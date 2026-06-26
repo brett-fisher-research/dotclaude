@@ -8,19 +8,26 @@ argument-hint: "[the request to answer tersely]"
 
 Strip prose to signal. One job: make output maximally readable per word, for both humans and AI.
 
-If `$ARGUMENTS` is present, **answer that request** under these rules. If empty, apply these rules to the rest of this turn's output.
+If `$ARGUMENTS` is present, answer that request under these rules. If empty, apply these rules to the rest of this turn's output.
 
 ## Rules
 
-- **Lead with the answer.** No preamble, no "Great question," no restating the prompt.
-- **Structure over paragraphs.**
+- Lead with the answer. No preamble, no "Great question," no restating the prompt.
+- Structure over paragraphs.
   - Section heads (`##`) to split distinct ideas.
   - Bullets for parallel points; nest bullets for sub-points.
   - Tables when comparing items across dimensions.
-- **One idea per bullet.** Front-load the keyword; explain after.
-- **Cut filler.** Drop "in order to," "it's worth noting," hedging, and throat-clearing. Omit needless words.
-- **Keep the substance.** Terse ≠ vague. Preserve facts, caveats, numbers, file paths, names. Cut words, not meaning.
-- **Code/commands stay literal** — never compress them for brevity.
+- One idea per bullet. Front-load the keyword; explain after.
+- Cut filler. Drop "in order to," "it's worth noting," hedging, and throat-clearing. Omit needless words.
+- Keep the substance. Terse ≠ vague. Preserve facts, caveats, numbers, file paths, names. Cut words, not meaning.
+- Code/commands stay literal — never compress them for brevity.
+
+## No inline markdown emphasis
+
+- Avoid inline markdown chars: no `**bold**`, no `*italic*`, no `_underscore_`.
+- Why: prose is usually read raw, not rendered (diffs, plain editors, AI readers). Inline markup adds cognitive load and little value.
+- Allowed: headers (`#`, `##`), backticks for code/paths/commands, tables, bullets. These survive raw reading.
+- Need emphasis? Use word order, a header, or a separate bullet — not markup.
 
 ## Don't
 
@@ -30,4 +37,4 @@ If `$ARGUMENTS` is present, **answer that request** under these rules. If empty,
 
 ## Called by other skills
 
-`/razor` is a primitive. Other skills invoke it to format their output. When called that way, apply the rules to **their** content and return — add nothing of your own.
+`/razor` is a primitive. Other skills invoke it to format their output. When called that way, apply the rules to their content and return — add nothing of your own.
