@@ -1,17 +1,16 @@
 ---
 name: pr
-description: Start a pull-request workflow for any code change. Use when the user says "/pr", "let's make a PR", "start a branch for ...", or whenever code is about to change. This is the STANDARD entry point for ALL code changes — it ensures a clean tree, branches off an up-to-date main, and enforces commit-at-every-step discipline. It does NOT push or open a PR — that happens later via /raise, then /merge.
+description: Run a pull-request workflow for any code change end to end — clean tree, branch off an up-to-date base, do the work committing every step, then push and open the PR and print its link. Use when the user says "/pr", "let's make a PR", "start a branch for ...", "raise the PR", "open the PR", or whenever code is about to change. This is the STANDARD entry point for ALL code changes. /merge lands it afterward.
 argument-hint: "[--base <branch>] <what you're about to work on>"
 allowed-tools: Bash Read Write Edit
 ---
 
-# Start a pull-request workflow
+# Run a pull-request workflow
 
-Standard workflow for every code change. Nothing lands on `main` directly — all work rides a PR branch from here. Three skills:
+Standard workflow for every code change. Nothing lands on `main` directly — all work rides a PR branch from here. Two skills:
 
-1. `/pr` (this skill) — clean tree, branch off a fresh base (`main` by default), do the work, commit every step.
-2. `/raise` — push the branch and open the PR.
-3. `/merge` — squash-merge, return to `main`, pull.
+1. `/pr` (this skill) — clean tree, branch off a fresh base (`main` by default), do the work committing every step, push, open the PR, print its link.
+2. `/merge` — squash-merge, return to the base, pull.
 
 Work to do is in `$ARGUMENTS`; if invoked bare, infer it from the conversation.
 
@@ -54,22 +53,53 @@ Work to do is in `$ARGUMENTS`; if invoked bare, infer it from the conversation.
 
    `<short-slug>` is kebab-case. Confirm: `git branch --show-current`.
 
-   > Remember the base for later. `/raise` opens the PR against (and `/merge` lands it into) this
-   > same base — pass `--base <branch>` to them when it isn't `main`.
+   > Remember the base — step 5 opens the PR against it, and `/merge` lands it into it. Pass
+   > `--base <branch>` to `/merge` when it isn't `main`.
 
 3. Do the work, committing at EVERY step — not one giant commit at the end:
    ```bash
    git add -A && git commit -m "<concise, present-tense message>"
    ```
    - Each commit = a coherent, self-contained step (e.g. "scaffold app", "wire up save flow").
-   - Clean tree on every handback. Whenever you yield to the user — question, progress, review — everything you changed is already committed. Confirm with `git status --porcelain` (empty).
+   - Clean tree before pushing. Confirm with `git status --porcelain` (empty).
    - Follow the repo's commit convention (short, imperative; see `git log`). End each message with the standard co-author trailer.
 
-4. Stop at committed — do NOT push or open a PR. Never run `git push` or `gh pr create`. The branch stays local until the user invokes `/raise`. When done, tell the user it's ready to review locally, then `/raise` when they want the PR opened.
+4. Push the branch to the remote (HTTPS — auth via the gh credential helper; never SSH), setting upstream:
+   ```bash
+   git push -u origin "$(git branch --show-current)"
+   ```
+
+5. Open the PR against the base from step 2. Write a real title and body — summarize what changed and
+   why, derived from the commits/diff. `$ARGUMENTS` may supply a title or extra context:
+   ```bash
+   gh pr create --base <base> --head "$(git branch --show-current)" \
+     --title "<concise title>" \
+     --body "$(cat <<'EOF'
+   ## Summary
+   - <what changed and why>
+
+   ## Test plan
+   - <how it was verified>
+
+   🤖 Generated with [Claude Code](https://claude.com/claude-code)
+   EOF
+   )"
+   ```
+
+6. Print the PR link in an ASCII box so it's easy to spot. Capture the URL `gh pr create` printed
+   (or `gh pr view --json url -q .url`) and frame it — size the box to the URL:
+   ```
+   ╭────────────────────────────────────────────────────────────╮
+   │  PR ready                                                    │
+   │  https://github.com/<owner>/<repo>/pull/<n>                  │
+   ╰────────────────────────────────────────────────────────────╯
+   ```
+   Then remind the user: review it, request any follow-ups (added as further commits on this branch —
+   keep committing, push to update the PR), and run `/merge` when happy (passing `--base <branch>` if
+   this PR targets a non-`main` base).
 
 ## Relationship to other skills
 
-Code-changing skills (`/new-experiment`, `/experiment`, `/promote-experiment`, and any future one) run inside this flow: invoke `/pr` first, commit every step, leave pushing/PR-opening to `/raise` and `/merge`. See `~/claude-experiments/CLAUDE.md` ("Code changes go through the PR workflow").
+Code-changing skills (`/new-experiment`, `/experiment`, `/promote-experiment`, and any future one) run inside this flow: invoke `/pr`, commit every step, leave the squash-merge to `/merge`. See `~/claude-experiments/CLAUDE.md` ("Code changes go through the PR workflow").
 
-Planning-first flow: `/linear` → `/planit` (approve) → `/pr` → `/raise` → `/merge`. `/pr` is
-the implement step; it assumes the plan is already approved.
+Planning-first flow: `/linear` → `/planit` (approve) → `/pr` → `/merge`. `/pr` is the implement-and-raise step; it assumes the plan is already approved.
