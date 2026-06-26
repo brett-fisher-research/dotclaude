@@ -1,7 +1,7 @@
 ---
 name: pr
 description: Start a pull-request workflow for any code change. Use when the user says "/pr", "let's make a PR", "start a branch for ...", or whenever code is about to change. This is the STANDARD entry point for ALL code changes — it ensures a clean tree, branches off an up-to-date main, and enforces commit-at-every-step discipline. It does NOT push or open a PR — that happens later via /raise, then /merge.
-argument-hint: "<what you're about to work on>"
+argument-hint: "[--base <branch>] <what you're about to work on>"
 allowed-tools: Bash Read Write Edit
 ---
 
@@ -9,7 +9,7 @@ allowed-tools: Bash Read Write Edit
 
 Standard workflow for **every** code change. Nothing lands on `main` directly — all work rides a PR branch from here. Three skills:
 
-1. **`/pr`** (this skill) — clean tree, branch off fresh `main`, do the work, commit every step.
+1. **`/pr`** (this skill) — clean tree, branch off a fresh base (`main` by default), do the work, commit every step.
 2. **`/raise`** — push the branch and open the PR.
 3. **`/merge`** — squash-merge, return to `main`, pull.
 
@@ -30,21 +30,32 @@ Work to do is in `$ARGUMENTS`; if invoked bare, infer it from the conversation.
      Never silently proceed over a dirty tree.
    - **Already on a non-`main` PR branch**: ask whether to keep working on it (skip to step 3) or branch fresh.
 
-2. **Branch off up-to-date `main`.** Sync the remote first:
+2. **Pick the base branch, then branch off an up-to-date copy of it.** Resolve the base:
+   - **`--base <branch>` given** (in `$ARGUMENTS`) → use it.
+   - **else on `main`** → base = `main`.
+   - **else on some other branch `X`** (an integration/feature branch like `premium-sync`) → **ASK**
+     via `AskUserQuestion` whether to branch off `main` or off the current branch `X`. Never silently
+     assume.
+
+   Then sync + branch:
    ```bash
    git fetch origin --prune
-   git checkout main
-   git pull --ff-only
-   git checkout -b <type>/<short-slug>
+   git checkout <base>
+   git pull --ff-only                 # if the branch has no upstream: git pull origin <base> --ff-only
+   git checkout -b <branch-name>
    ```
-   `<type>` = loose grouping of the work:
-   - `feat/` — new feature or capability
-   - `bug/` — bug fix
-   - `chore/` — tooling, deps, config, refactors with no behavior change
-   - `docs/` — documentation only
-   - …or another short, sensible prefix.
 
-   `<short-slug>` is kebab-case (e.g. `feat/dark-mode-toggle`, `bug/save-modal-autofill`). Confirm: `git branch --show-current`.
+   **Branch name:**
+   - **Working a tracked ticket** (via `/linear`) → `<ID>/<short-slug>` (e.g. `FIS-123/dark-mode`).
+     Keep the `<ID>` prefix — `/linear` uses it to find the ticket; this skill itself stays
+     tracker-agnostic.
+   - **No ticket** → `<type>/<short-slug>`, `<type>` ∈ `feat` (new capability) · `bug` · `chore`
+     (tooling/deps/refactor) · `docs` · or another sensible prefix.
+
+   `<short-slug>` is kebab-case. Confirm: `git branch --show-current`.
+
+   > **Remember the base for later.** `/raise` opens the PR against (and `/merge` lands it into) this
+   > same base — pass `--base <branch>` to them when it isn't `main`.
 
 3. **Do the work, committing at EVERY step** — not one giant commit at the end:
    ```bash
@@ -59,3 +70,6 @@ Work to do is in `$ARGUMENTS`; if invoked bare, infer it from the conversation.
 ## Relationship to other skills
 
 Code-changing skills (`/new-experiment`, `/experiment`, `/promote-experiment`, and any future one) **run inside this flow**: invoke `/pr` first, commit every step, leave pushing/PR-opening to `/raise` and `/merge`. See `~/claude-experiments/CLAUDE.md` ("Code changes go through the PR workflow").
+
+**Planning-first flow:** `/linear` → `/planit` (approve) → **`/pr`** → `/raise` → `/merge`. `/pr` is
+the implement step; it assumes the plan is already approved.
