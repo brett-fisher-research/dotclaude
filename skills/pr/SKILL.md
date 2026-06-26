@@ -86,17 +86,20 @@ Work to do is in `$ARGUMENTS`; if invoked bare, infer it from the conversation.
    )"
    ```
 
-6. Print the PR link in an ASCII box so it's easy to spot. Capture the URL `gh pr create` printed
-   (or `gh pr view --json url -q .url`) and frame it — size the box to the URL:
+6. End the skill by printing the PR link as the very last thing — nothing after it. Put a short
+   summary of changes first, then a horizontal rule, then the link. Capture the URL `gh pr create`
+   printed (or `gh pr view --json url -q .url`):
    ```
-   ╭────────────────────────────────────────────────────────────╮
-   │  PR ready                                                    │
-   │  https://github.com/<owner>/<repo>/pull/<n>                  │
-   ╰────────────────────────────────────────────────────────────╯
+   <one-line summary>
+   - <key change>
+   - <key change>
+
+   ───────────────
+   👉 Your PR
+   🔗 https://github.com/<owner>/<repo>/pull/<n>
    ```
-   Then remind the user: review it, request any follow-ups (added as further commits on this branch —
-   keep committing, push to update the PR), and run `/merge` when happy (passing `--base <branch>` if
-   this PR targets a non-`main` base).
+   The link is the last line — no closing recap, no next-steps reminder after it. (Follow-ups still
+   work the usual way: commit on this branch and push to update the PR, then `/merge` when happy.)
 
 ## Relationship to other skills
 
