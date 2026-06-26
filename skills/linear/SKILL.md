@@ -4,13 +4,13 @@ argument-hint: '[issue-id]'
 description: >-
     Pick up a Linear ticket to start work: read the issue and ALL its comments (or create a ticket if
     none exists), mark it In Progress, then hand off to /planit for planning. This skill is the single
-    home for all Linear interaction — it also updates the ticket after /raise and /merge. Use when the
+    home for all Linear interaction — it also updates the ticket after /pr and /merge. Use when the
     user says "/linear", references a Linear issue (e.g. FIS-123), or asks to start work tracked in Linear.
 ---
 
 # Linear — the single home for ticket interaction
 
-This is the only skill that talks to Linear. `/planit`, `/pr`, `/raise`, and `/merge` are
+This is the only skill that talks to Linear. `/planit`, `/pr`, and `/merge` are
 tracker-agnostic; they never touch Linear. All ticket reads and status writes live here, so the
 workflow stays composable and the other skills work in any repo with no tracker at all.
 
@@ -32,27 +32,26 @@ You have the Linear MCP server. The user wants to start work on `$0` (an issue i
 
 ## 2. The rest of the lifecycle (Linear updates this skill owns)
 
-`/pr` → `/raise` → `/merge` run on their own and stay Linear-free. This skill performs the ticket
+`/pr` → `/merge` run on their own and stay Linear-free. This skill performs the ticket
 updates at these points — do them as the flow reaches each step:
 
 | When | Update the ticket to |
 |---|---|
 | Intake (above) | In Progress |
-| After `/raise` opens the PR | add a comment with the PR URL, set In Review |
+| After `/pr` opens the PR | add a comment with the PR URL, set In Review |
 | After `/merge` lands the PR | Done |
 
 ```
 /linear  read/create + In Progress      ← here
 /planit  plan in chat, approve
-/pr      branch <ID>/slug + commits
-/raise   push + open PR
+/pr      branch <ID>/slug + commits + push + open PR
    └─ /linear: comment PR url + In Review
 /merge   squash-merge
    └─ /linear: set Done
 ```
 
 Branch-name contract: `/pr` names the branch `<ID>/<short-slug>` (e.g. `FIS-123/dark-mode`) when a
-ticket is in play. That prefix is how this skill recovers which ticket to update after `/raise` and
+ticket is in play. That prefix is how this skill recovers which ticket to update after `/pr` and
 `/merge` — keep it.
 
 ## Linear conventions

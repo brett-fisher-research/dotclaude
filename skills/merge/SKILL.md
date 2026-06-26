@@ -1,13 +1,13 @@
 ---
 name: merge
-description: Squash-merge the open PR, return to the base branch, and pull the latest. Use when the user says "/merge", "merge the PR", "ship it", "land it". This is the final step of the PR workflow (after /pr and /raise), run only when the user is happy with the reviewed PR. Defaults to a squash merge into main; pass --base for an integration branch.
+description: Squash-merge the open PR, return to the base branch, and pull the latest. Use when the user says "/merge", "merge the PR", "ship it", "land it". This is the final step of the PR workflow (after /pr), run only when the user is happy with the reviewed PR. Defaults to a squash merge into main; pass --base for an integration branch.
 argument-hint: "[--base <branch>] [PR number]"
 allowed-tools: Bash Read
 ---
 
 # Merge the pull request
 
-Final step of the PR workflow (`/pr` → `/raise` → `/merge`). Run only when the user has reviewed
+Final step of the PR workflow (`/pr` → `/merge`). Run only when the user has reviewed
 the PR and is happy with it. The user prefers a squash merge so the base gets exactly one commit
 per PR.
 
@@ -21,7 +21,7 @@ tracked in Linear, `/linear` marks the ticket Done after this runs.)
    ```bash
    gh pr view --json number,title,state,mergeStateStatus,headRefName,baseRefName
    ```
-   - If it isn't open, stop and report (maybe already merged, or never raised — `/raise`).
+   - If it isn't open, stop and report (maybe already merged, or never opened — `/pr`).
    - If checks/mergeability are blocking, surface that to the user rather than force-merging.
    - Sanity: `baseRefName` should match the resolved base.
 

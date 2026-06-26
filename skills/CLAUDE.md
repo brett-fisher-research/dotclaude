@@ -17,8 +17,7 @@ Existing chain — each link is independently useful:
 ```
 /linear  read/create ticket + In Progress
 /planit  plan in chat, approve
-/pr      branch + commit every step
-/raise   push + open PR
+/pr      branch + commit every step + push + open PR
 /merge   squash-merge + return to base
 ```
 
