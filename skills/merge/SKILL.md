@@ -1,8 +1,8 @@
 ---
 name: merge
-description: Squash-merge the open PR, return to the base branch, and pull the latest. Use when the user says "/merge", "merge the PR", "ship it", "land it". This is the final step of the PR workflow (after /pr and /raise), run only when the user is happy with the reviewed PR. Defaults to a squash merge into main; pass --base for an integration branch. Sets the Linear ticket Done when the branch is named <ID>/slug.
+description: Squash-merge the open PR, return to the base branch, and pull the latest. Use when the user says "/merge", "merge the PR", "ship it", "land it". This is the final step of the PR workflow (after /pr and /raise), run only when the user is happy with the reviewed PR. Defaults to a squash merge into main; pass --base for an integration branch.
 argument-hint: "[--base <branch>] [PR number]"
-allowed-tools: Bash Read mcp__claude_ai_Linear__save_issue
+allowed-tools: Bash Read
 ---
 
 # Merge the pull request
@@ -10,6 +10,9 @@ allowed-tools: Bash Read mcp__claude_ai_Linear__save_issue
 Final step of the PR workflow (`/pr` → `/raise` → **`/merge`**). Run only when the user has reviewed
 the PR and is happy with it. The user prefers a **squash merge** so the base gets exactly one commit
 per PR.
+
+This skill is self-contained git/gh only — it knows nothing about issue trackers. (If the work is
+tracked in Linear, `/linear` marks the ticket Done after this runs.)
 
 ## Steps
 
@@ -34,10 +37,5 @@ per PR.
    git pull --ff-only
    ```
 
-4. **Update Linear (best-effort).** If `headRefName` started with a ticket id — `^[A-Z]+-[0-9]+`,
-   e.g. `FIS-123/dark-mode` — set that ticket's status to **Done** via the Linear MCP. If the branch
-   had no `<ID>` prefix, skip — no Linear touch.
-
-5. **Confirm.** Show the result: `git log --oneline -3`. Report that the PR is merged, the branch is
-   cleaned up, the ticket is Done (if applicable), and we're back on an up-to-date base — ready for
-   the next `/pr`.
+4. **Confirm.** Show the result: `git log --oneline -3`. Report that the PR is merged, the branch is
+   cleaned up, and we're back on an up-to-date base — ready for the next `/pr`.

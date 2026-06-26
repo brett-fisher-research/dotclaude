@@ -46,8 +46,9 @@ Work to do is in `$ARGUMENTS`; if invoked bare, infer it from the conversation.
    ```
 
    **Branch name:**
-   - **Working a Linear ticket** (via `/linear`) → `<ID>/<short-slug>` (e.g. `FIS-123/dark-mode`). The
-     `<ID>` prefix is the contract that lets `/raise` and `/merge` update the ticket — keep it.
+   - **Working a tracked ticket** (via `/linear`) → `<ID>/<short-slug>` (e.g. `FIS-123/dark-mode`).
+     Keep the `<ID>` prefix — `/linear` uses it to find the ticket; this skill itself stays
+     tracker-agnostic.
    - **No ticket** → `<type>/<short-slug>`, `<type>` ∈ `feat` (new capability) · `bug` · `chore`
      (tooling/deps/refactor) · `docs` · or another sensible prefix.
 

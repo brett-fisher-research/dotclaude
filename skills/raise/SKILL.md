@@ -1,8 +1,8 @@
 ---
 name: raise
-description: Push the current PR branch and open the pull request. Use when the user says "/raise", "raise the PR", "open the PR", "put up the PR". This is step 2 of the PR workflow (after /pr sets up the branch and the work is committed); the user reviews the opened PR and suggests follow-ups, then invokes /merge when happy. Opens against the base /pr used (main by default; pass --base for an integration branch), and updates the Linear ticket when the branch is named <ID>/slug.
+description: Push the current PR branch and open the pull request. Use when the user says "/raise", "raise the PR", "open the PR", "put up the PR". This is step 2 of the PR workflow (after /pr sets up the branch and the work is committed); the user reviews the opened PR and suggests follow-ups, then invokes /merge when happy. Opens against the base /pr used (main by default; pass --base for an integration branch).
 argument-hint: "[--base <branch>] [PR title / extra context]"
-allowed-tools: Bash Read mcp__claude_ai_Linear__save_comment mcp__claude_ai_Linear__save_issue
+allowed-tools: Bash Read
 ---
 
 # Raise the pull request
@@ -11,6 +11,9 @@ Step 2 of the PR workflow (`/pr` → **`/raise`** → `/merge`). The branch alre
 commits; this skill pushes it and opens the PR against the **same base `/pr` branched from**. After
 it's up, the user reviews and may ask for follow-ups (more commits on the same branch — keep
 committing per `/pr`), then runs **`/merge`** when satisfied.
+
+This skill is self-contained git/gh only — it knows nothing about issue trackers. (If the work is
+tracked in Linear, `/linear` updates the ticket after this runs.)
 
 ## Steps
 
@@ -48,13 +51,6 @@ committing per `/pr`), then runs **`/merge`** when satisfied.
    )"
    ```
 
-4. **Update Linear (best-effort).** If the branch name starts with a ticket id — `^[A-Z]+-[0-9]+`,
-   e.g. `FIS-123/dark-mode` — update that ticket via the Linear MCP:
-   - add a **comment** with the PR URL, and
-   - set its status to **In Review**.
-
-   If the branch has no `<ID>` prefix (e.g. `feat/…`), skip this step entirely — no Linear touch.
-
-5. **Report the PR URL** (`gh pr view --web` optional). Remind the user: review it, request any
+4. **Report the PR URL** (`gh pr view --web` optional). Remind the user: review it, request any
    follow-ups (added as further commits on this branch), and invoke **`/merge`** when happy — passing
    `--base <branch>` if this PR targets a non-`main` base.
