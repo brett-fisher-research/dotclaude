@@ -10,7 +10,7 @@ description: >-
 
 # Linear — the single home for ticket interaction
 
-This is the **only** skill that talks to Linear. `/planit`, `/pr`, `/raise`, and `/merge` are
+This is the only skill that talks to Linear. `/planit`, `/pr`, `/raise`, and `/merge` are
 tracker-agnostic; they never touch Linear. All ticket reads and status writes live here, so the
 workflow stays composable and the other skills work in any repo with no tracker at all.
 
@@ -18,16 +18,16 @@ You have the Linear MCP server. The user wants to start work on `$0` (an issue i
 
 ## 1. Intake (when this skill runs)
 
-1. **Find or create the ticket.**
+1. Find or create the ticket.
    - If `$0` is an issue id (e.g. `FIS-123`), use it.
    - If empty, infer the intended ticket from the conversation. If a matching ticket plausibly
-     exists, confirm it; otherwise **create one** — we track all work in Linear. Give it a clear
+     exists, confirm it; otherwise create one — we track all work in Linear. Give it a clear
      title, the right team/project, and a sensible label (see conventions). Ask only when the
      team/project is genuinely ambiguous.
-2. **Read it fully** — the description **and every comment** (comments often carry the latest
+2. Read it fully — the description and every comment (comments often carry the latest
    decisions). Note linked parent/sub-issues and blocking relationships.
-3. **Mark it In Progress.**
-4. **Hand off to `/planit`** with the ticket's intent, so it produces a plan in chat for the user to
+3. Mark it In Progress.
+4. Hand off to `/planit` with the ticket's intent, so it produces a plan in chat for the user to
    approve. Don't design solutions here beyond restating the problem.
 
 ## 2. The rest of the lifecycle (Linear updates this skill owns)
@@ -37,9 +37,9 @@ updates at these points — do them as the flow reaches each step:
 
 | When | Update the ticket to |
 |---|---|
-| Intake (above) | **In Progress** |
-| After `/raise` opens the PR | add a **comment with the PR URL**, set **In Review** |
-| After `/merge` lands the PR | **Done** |
+| Intake (above) | In Progress |
+| After `/raise` opens the PR | add a comment with the PR URL, set In Review |
+| After `/merge` lands the PR | Done |
 
 ```
 /linear  read/create + In Progress      ← here
@@ -51,14 +51,14 @@ updates at these points — do them as the flow reaches each step:
    └─ /linear: set Done
 ```
 
-**Branch-name contract:** `/pr` names the branch `<ID>/<short-slug>` (e.g. `FIS-123/dark-mode`) when a
+Branch-name contract: `/pr` names the branch `<ID>/<short-slug>` (e.g. `FIS-123/dark-mode`) when a
 ticket is in play. That prefix is how this skill recovers which ticket to update after `/raise` and
 `/merge` — keep it.
 
 ## Linear conventions
 
-- **Every ticket gets a label.** Common ones: `Feature` (new/additive work), `Bug`, `Documentation`,
+- Every ticket gets a label. Common ones: `Feature` (new/additive work), `Bug`, `Documentation`,
   `Spike` (research), plus whatever the workspace uses. Be proactive — don't ask which label to add.
-- **Use parents + sub-issues** when a unit splits into several independently shippable pieces; keep a
+- Use parents + sub-issues when a unit splits into several independently shippable pieces; keep a
   single cohesive change as one flat ticket.
 - When creating a ticket, write a real description (goal + scope + done-when), not a one-liner.

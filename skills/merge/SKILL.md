@@ -7,8 +7,8 @@ allowed-tools: Bash Read
 
 # Merge the pull request
 
-Final step of the PR workflow (`/pr` → `/raise` → **`/merge`**). Run only when the user has reviewed
-the PR and is happy with it. The user prefers a **squash merge** so the base gets exactly one commit
+Final step of the PR workflow (`/pr` → `/raise` → `/merge`). Run only when the user has reviewed
+the PR and is happy with it. The user prefers a squash merge so the base gets exactly one commit
 per PR.
 
 This skill is self-contained git/gh only — it knows nothing about issue trackers. (If the work is
@@ -16,7 +16,7 @@ tracked in Linear, `/linear` marks the ticket Done after this runs.)
 
 ## Steps
 
-1. **Resolve the base + identify the PR.** Base = `--base <branch>` from `$ARGUMENTS`, else `main`.
+1. Resolve the base + identify the PR. Base = `--base <branch>` from `$ARGUMENTS`, else `main`.
    Use the PR for the current branch (or the number in `$ARGUMENTS`):
    ```bash
    gh pr view --json number,title,state,mergeStateStatus,headRefName,baseRefName
@@ -25,17 +25,17 @@ tracked in Linear, `/linear` marks the ticket Done after this runs.)
    - If checks/mergeability are blocking, surface that to the user rather than force-merging.
    - Sanity: `baseRefName` should match the resolved base.
 
-2. **Squash-merge** and delete the branch (squash = single commit on the base):
+2. Squash-merge and delete the branch (squash = single commit on the base):
    ```bash
    gh pr merge <number> --squash --delete-branch
    ```
    `--delete-branch` removes both the remote and local branch.
 
-3. **Return to the base and pull the latest** so the local repo has the squashed commit:
+3. Return to the base and pull the latest so the local repo has the squashed commit:
    ```bash
    git checkout <base>
    git pull --ff-only
    ```
 
-4. **Confirm.** Show the result: `git log --oneline -3`. Report that the PR is merged, the branch is
+4. Confirm. Show the result: `git log --oneline -3`. Report that the PR is merged, the branch is
    cleaned up, and we're back on an up-to-date base — ready for the next `/pr`.

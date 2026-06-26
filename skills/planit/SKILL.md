@@ -10,26 +10,26 @@ description: >-
 
 # Planit — plan in chat, then gate on approval
 
-One job: **turn a problem into a plan the user approves, printed in chat.** No file writes, no code.
+One job: turn a problem into a plan the user approves, printed in chat. No file writes, no code.
 Standalone-invokable, or called by `/linear` after ticket intake.
 
 Plan the work in `$ARGUMENTS` (or the ticket/context handed in by `/linear`).
 
 ## Rules
 
-1. **Print the plan in chat. Never write it to a file.** (No `.features/`, no `PLAN.md`.) The chat is
+1. Print the plan in chat. Never write it to a file. (No `.features/`, no `PLAN.md`.) The chat is
    the artifact.
-2. **Keep it terse — use `/razor`.** Dense, skimmable: section heads, bullets, tables. No padding.
-3. **Diagram the flows in ASCII.** Any non-trivial control flow, architecture, or data path gets an
+2. Keep it terse — use `/razor`. Dense, skimmable: section heads, bullets, tables. No padding.
+3. Diagram the flows in ASCII. Any non-trivial control flow, architecture, or data path gets an
    ASCII diagram, not a paragraph.
-4. **Surface decisions as ASCII options.** When the work needs a choice — *especially a UX/layout
-   choice* — present 2–3 concrete alternatives as ASCII wireframes/diagrams and use `AskUserQuestion`
+4. Surface decisions as ASCII options. When the work needs a choice — especially a UX/layout
+   choice — present 2–3 concrete alternatives as ASCII wireframes/diagrams and use `AskUserQuestion`
    to let the user pick. Iterate on the wireframe until they're happy.
-5. **Cover what a builder needs:** approach, files to add/change, flows, docs to update (per the
+5. Cover what a builder needs: approach, files to add/change, flows, docs to update (per the
    repo's own conventions / `CLAUDE.md` — defer specifics to the repo, don't hardcode), risks and
    cut-lines, and how it'll be verified.
-6. **GATE — not done until approved.** End by explicitly asking whether the plan is good. Iterate on
-   feedback. **Do not start coding.** Approval is the only exit.
+6. GATE — not done until approved. End by explicitly asking whether the plan is good. Iterate on
+   feedback. Do not start coding. Approval is the only exit.
 
 ## After approval
 
