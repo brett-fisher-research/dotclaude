@@ -38,12 +38,12 @@ Body:
 ## 4. Wire it into the chain
 
 - End the SKILL.md by naming how it composes — which skill precedes it, which follows, what it hands off.
-- If it slots into the `/linear → /planit → /pr → /raise → /merge` flow, say where.
+- If it slots into the `/linear → /planit → /pr → /merge` flow, say where.
 - Keep it portable: push tracker/tool-specific concerns into the skill that owns them, not this one.
 
 ## 5. Hand off
 
-- New skills live in this repo → land via the PR flow. Tell the user it's scaffolded; `/pr` already running this change will commit it, then `/raise`.
+- New skills live in this repo → land via the PR flow. Tell the user it's scaffolded; `/pr` already running this change will commit it, push, and open the PR, then `/merge`.
 
 ## Composition
 

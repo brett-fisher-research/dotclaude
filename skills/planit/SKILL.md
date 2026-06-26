@@ -33,11 +33,11 @@ Plan the work in `$ARGUMENTS` (or the ticket/context handed in by `/linear`).
 
 ## After approval
 
-Hand off to `/pr` to branch and implement (committing every step), then `/raise`, then `/merge`.
-`/planit` itself stops at "approved."
+Hand off to `/pr` to branch, implement (committing every step), push, and open the PR, then
+`/merge`. `/planit` itself stops at "approved."
 
 ## Anti-goals
 
 - Don't implement, branch, or touch git — that's `/pr`.
-- Don't manage Linear status — that's `/linear` (start) and `/raise` + `/merge` (finish).
+- Don't manage Linear status — that's `/linear` (start) and `/pr` + `/merge` (finish).
 - Don't bury a real choice in prose. If it's a decision, make it a visible, selectable option.

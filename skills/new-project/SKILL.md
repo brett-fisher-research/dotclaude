@@ -49,5 +49,5 @@ Project name is in `$ARGUMENTS`; if bare, ask for it (kebab-case).
 ## Composition
 
 - Standalone entry point — does not run inside `/pr` (it creates a new repo, not a change to this one).
-- Lands the session in the new project, so the usual `/pr` → `/raise` → `/merge` flow runs there with no manual `cd`.
+- Lands the session in the new project, so the usual `/pr` → `/merge` flow runs there with no manual `cd`.
 - Reuses the machine-local-config pattern: anything else that varies per machine can add keys to `~/.claude/workspace.conf`.
