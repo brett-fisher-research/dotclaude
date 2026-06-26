@@ -6,15 +6,15 @@ description: Scaffold a new skill that follows the unix philosophy — one job, 
 
 # New skill — scaffold a single-purpose skill
 
-One job: create a new skill that does **one thing extremely well**. See `../CLAUDE.md` for the philosophy.
+One job: create a new skill that does one thing extremely well. See `../CLAUDE.md` for the philosophy.
 
 The user wants a skill that does `$ARGUMENTS` (an intent, or empty — then infer from the conversation).
 
 ## 1. Find the one job
 
-- **State the job in one sentence.** If you can't, the scope is wrong.
-- **Reject bundling.** If the request packs multiple jobs ("do X and Y and Z"), STOP. Propose splitting into separate skills that compose. Don't scaffold a monolith.
-- **Check for overlap.** Scan `skills/` (`ls C:/Users/Brett/.claude/skills`). If an existing skill already owns this job, extend it instead of duplicating.
+- State the job in one sentence. If you can't, the scope is wrong.
+- Reject bundling. If the request packs multiple jobs ("do X and Y and Z"), STOP. Propose splitting into separate skills that compose. Don't scaffold a monolith.
+- Check for overlap. Scan `skills/` (`ls C:/Users/Brett/.claude/skills`). If an existing skill already owns this job, extend it instead of duplicating.
 
 ## 2. Name it
 
@@ -23,11 +23,11 @@ The user wants a skill that does `$ARGUMENTS` (an intent, or empty — then infe
 
 ## 3. Write it — all prose via `/razor`
 
-Invoke `/razor` to write **every** prose part: the `description` and the body. Code, commands, and frontmatter keys stay literal.
+Invoke `/razor` to write every prose part: the `description` and the body. Code, commands, and frontmatter keys stay literal.
 
 Frontmatter:
 - `name` — matches the dir.
-- `description` — what it does + **when to use it** (trigger phrases). This is how the skill gets selected; make it specific.
+- `description` — what it does + when to use it (trigger phrases). This is how the skill gets selected; make it specific.
 - `argument-hint` — optional; only if the skill takes args.
 
 Body:
@@ -37,7 +37,7 @@ Body:
 
 ## 4. Wire it into the chain
 
-- End the SKILL.md by naming **how it composes** — which skill precedes it, which follows, what it hands off.
+- End the SKILL.md by naming how it composes — which skill precedes it, which follows, what it hands off.
 - If it slots into the `/linear → /planit → /pr → /raise → /merge` flow, say where.
 - Keep it portable: push tracker/tool-specific concerns into the skill that owns them, not this one.
 
