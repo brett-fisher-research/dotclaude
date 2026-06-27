@@ -23,8 +23,10 @@ One job: be a single worker bee — take ONE assigned task to a raised PR, log p
 
 1. Restore context: read `BEE.md`.
 2. Do the task — almost always `/linear` (pick up, mark In Progress, read all comments) then `/pr` (branch off the base, commit each step, push, open the PR).
-3. Verify to the repo's bar before the PR (its typecheck/tests/etc).
+3. Verify to the repo's bar before the PR (its typecheck/tests/etc) — automated checks only.
 4. Update `BEE.md`. Then PAUSE and report to the queen. Do NOT merge. Do NOT take the next task.
+
+A bee NEVER launches the live app. Single-instance apps (one lock/port/db) would collide with other bees. Live review of the running app happens only at verification time via `/humancheck` — the bee just edits, runs automated checks, and raises its PR.
 
 ## Death + revival
 

@@ -33,6 +33,7 @@ The wider arc, from fuzzy thought to merged code:
 /planit    plan in chat, approve
 /swarm     queen mode: run 2-3 parallel bees through task queues, gated on review
   /bee     one worker bee: one worktree, one task → PR → pause; BEE.md survives death
+  /humancheck  run one bee's worktree (→ /run) so Brett verifies the live app by hand
 /pr        branch + commit + push + open PR
 /merge     squash-merge + return to base
 /wt        isolate work in a worktree; reap on merge
@@ -41,6 +42,7 @@ The wider arc, from fuzzy thought to merged code:
 - Primitives (reused, add no content of their own): `/razor` (dense prose), `/structure` (output/artifact shape), `/humansteps` (manual steps in a fixed format).
 - `/swarm` and `/duck` are modes: invoked once, they hold the session's posture across turns until done.
 - `/swarm` assumes a plan exists — run `/duck` or `/planit` first.
+- Verify-time (Claude Code bundled skills): `/run` launches the app, `/verify` runs + observes it, `/run-skill-generator` writes a project's per-app launch recipe once. `/humancheck` wraps `/run` for a chosen bee. App-specific launch (env, ports, shared daemons) lives in the project run-skill, never in `/swarm`.
 
 ## Prose rule
 
