@@ -44,6 +44,12 @@ One job: orchestrate parallel bees through queued work, gated on human approval.
 - Detect two ways: lazily at hand-off (a bee won't wake when fed), AND proactively — run `/loop` ~every 2-3 min to check each bee is still on task.
 - Revive: deploy a FRESH bee to the dead one's existing worktree, pointing it at its `BEE.md` + a good initial prompt. Its work survives in the worktree + BEE.md.
 
+## Verifying a bee
+
+- When Brett says "check bee N", the queen invokes `/humancheck <bee>` — it switches into that bee's worktree, kills any live instance, and `/run`s the app hot-reloaded for Brett to eyeball.
+- The live app runs ONLY here, serially — bees never launch it (single-instance apps would collide). One app at a time; checking another bee kills the current one.
+- Precondition: `/run` needs the project's run-skill (the app-specific launch recipe — env, ports, shared daemons like a stripe listener). If it's missing, run `/run-skill-generator` once to write it (run the skill; don't reimplement it). App specifics live in that run-skill, never in swarm.
+
 ## Completion
 
 - When all queues drain and PRs merge, report the hive complete and hand to `/wt` to reap the worktrees.
@@ -51,4 +57,5 @@ One job: orchestrate parallel bees through queued work, gated on human approval.
 ## Composition
 
 - Plan with `/duck` or `/planit` first → `/swarm` runs the hive → each bee uses `/bee` (→ `/linear` + `/pr`) → Brett `/merge` between tasks → `/wt` reaps at the end.
+- Verification: queen invokes `/humancheck` → `/run` (→ `/run-skill-generator` if no run-skill yet).
 - Conforms to `/structure`; uses `/loop` for check-ins. The queen never merges — Brett does.
