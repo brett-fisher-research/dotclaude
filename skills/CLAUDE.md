@@ -24,6 +24,24 @@ Existing chain — each link is independently useful:
 - `/linear` is the only skill that touches Linear — the rest are tracker-agnostic.
 - `/razor` is a primitive: other skills call it to format their prose. It adds nothing of its own.
 
+The wider arc, from fuzzy thought to merged code:
+
+```
+/duck      think out loud, no action (the off-ramp)
+/suggest   3-5 distinct routes for an ambiguous problem (the inverse of /duck)
+/diagrams  one ascii diagram (flowchart | sequence | mockup)
+/planit    plan in chat, approve
+/swarm     queen mode: run 2-3 parallel bees through task queues, gated on review
+  /bee     one worker bee: one worktree, one task → PR → pause; BEE.md survives death
+/pr        branch + commit + push + open PR
+/merge     squash-merge + return to base
+/wt        isolate work in a worktree; reap on merge
+```
+
+- Primitives (reused, add no content of their own): `/razor` (dense prose), `/structure` (output/artifact shape), `/humansteps` (manual steps in a fixed format).
+- `/swarm` and `/duck` are modes: invoked once, they hold the session's posture across turns until done.
+- `/swarm` assumes a plan exists — run `/duck` or `/planit` first.
+
 ## Prose rule
 
 - All prose uses `/razor`. SKILL.md bodies, frontmatter `description`s, and this CLAUDE.md — write them dense and skimmable via `/razor`. Words cost tokens and attention.
