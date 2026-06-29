@@ -36,7 +36,7 @@ One job: orchestrate parallel bees through queued work, gated on human approval.
 
 1. Spin up: one bee per lane via `/bee` (background subagent, isolation worktree). Give each its worktree, base branch, first task, and enough context.
 2. Feed ONE task at a time. A bee does its task, raises its PR, pauses, reports up.
-3. Report to Brett: the hive as a structured table (per bee: done / working on / queued), per `/structure`.
+3. Report to Brett: the hive as a structured table (per bee: done / working on / queued)
 4. Gate: Brett reviews + merges the PR, then tells the queen to continue (next task) or retire that bee. Update HIVE.md, feed the next task.
 
 ## Dead bees
@@ -58,4 +58,4 @@ One job: orchestrate parallel bees through queued work, gated on human approval.
 
 - Plan with `/duck` or `/planit` first → `/swarm` runs the hive → each bee uses `/bee` (→ `/linear` + `/pr`) → Brett `/merge` between tasks → `/wt` reaps at the end.
 - Verification: queen invokes `/humancheck` → `/run` (→ `/run-skill-generator` if no run-skill yet).
-- Conforms to `/structure`; uses `/loop` for check-ins. The queen never merges — Brett does.
+- Uses `/loop` for check-ins. The queen never merges — Brett does.

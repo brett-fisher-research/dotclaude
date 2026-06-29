@@ -29,4 +29,4 @@ One job: put one bee's running app in front of Brett so he can verify it by hand
 ## Composition
 
 - Invoked by the `/swarm` queen when Brett says "check bee N"; also standalone.
-- Wraps `/run` (which consults the project run-skill / `/run-skill-generator`). Uses `/humansteps` to surface a web URL. Conforms to `/structure`.
+- Wraps `/run` (which consults the project run-skill / `/run-skill-generator`). Uses `/humansteps` to surface a web URL. 

@@ -35,7 +35,7 @@ A bee NEVER launches the live app. Single-instance apps (one lock/port/db) would
 
 ## Report shape (to the queen)
 
-Fixed block, conforms to `/structure`:
+Fixed block:
 
 ```
 🐝 <bee id> — <task id>: <state: PR ready | blocked | revived>
@@ -46,4 +46,4 @@ Note: <blocker or decision the queen needs>
 
 ## Composition
 
-- Spawned and fed by `/swarm`; reports up to the queen. Uses `/linear` + `/pr`. Conforms to `/structure`. Not a standalone Brett command.
+- Spawned and fed by `/swarm`; reports up to the queen. Uses `/linear` + `/pr`. Not a standalone Brett command.

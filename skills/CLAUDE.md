@@ -28,7 +28,7 @@ The wider arc, from fuzzy thought to merged code:
 
 ```
 /duck      think out loud, no action (the off-ramp)
-/suggest   3-5 distinct routes for an ambiguous problem (the inverse of /duck)
+/suggest   3-5 distinct routes for an ambiguous problem
 /diagrams  one ascii diagram (flowchart | sequence | mockup)
 /planit    plan in chat, approve
 /swarm     queen mode: run 2-3 parallel bees through task queues, gated on review
@@ -39,7 +39,7 @@ The wider arc, from fuzzy thought to merged code:
 /wt        isolate work in a worktree; reap on merge
 ```
 
-- Primitives (reused, add no content of their own): `/razor` (dense prose), `/structure` (output/artifact shape), `/humansteps` (manual steps in a fixed format).
+- Primitives (reused, add no content of their own): `/razor` (dense prose), `/humansteps` (manual steps in a fixed format).
 - `/swarm` and `/duck` are modes: invoked once, they hold the session's posture across turns until done.
 - `/swarm` assumes a plan exists — run `/duck` or `/planit` first.
 - Verify-time (Claude Code bundled skills): `/run` launches the app, `/verify` runs + observes it, `/run-skill-generator` writes a project's per-app launch recipe once. `/humancheck` wraps `/run` for a chosen bee. App-specific launch (env, ports, shared daemons) lives in the project run-skill, never in `/swarm`.

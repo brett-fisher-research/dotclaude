@@ -18,7 +18,7 @@ One job: tell Brett exactly what HE must do by hand, in a predictable format —
 - Only TRUE human steps. If the agent can do it, the agent does it — don't list it.
 - Each step: imperative action + where + the observable result to expect.
 - Secrets/keys: tell Brett what to copy and where to paste it back; never ask him to paste a secret into chat unless needed, and say so plainly.
-- Prose via `/razor`; shape via `/structure`.
+- Prose via `/razor`
 
 ## Fixed output format (the contract)
 
@@ -40,4 +40,4 @@ One job: tell Brett exactly what HE must do by hand, in a predictable format —
 ## Composition
 
 - A primitive, callable anywhere — often after `/pr` (verify), or mid-`/swarm` when a bee or the queen hits an external gap.
-- Conforms to `/structure`; written via `/razor`.
+- Written via `/razor`.
