@@ -1,0 +1,9 @@
+{
+  "name": "dotclaude",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Brett's ~/.claude skills and their bash test harness.",
+  "scripts": {
+    "test": "bash tests/run.sh"
+  }
+}

@@ -16,7 +16,6 @@ Existing chain — each link is independently useful:
 
 ```
 /linear  read/create ticket + In Progress
-/planit  plan in chat, approve
 /pr      branch + commit every step + push + open PR
 /merge   squash-merge + return to base
 ```
@@ -30,7 +29,6 @@ The wider arc, from fuzzy thought to merged code:
 /brot-board    think out loud on a permissive whiteboard, no pressure to act (the off-ramp)
 /suggest       3-5 distinct routes for an ambiguous problem
 /diagrams      one ascii diagram (flowchart | sequence | mockup)
-/planit        plan in chat, approve
 /brot-plan     break a goal into a recursive, deterministic plan → gitignored BROT_PLAN.md; enters brot mode
 /brot-dev      start the hot-reloaded dev server once in a bg agent; logs → .logs/
 /brot-bot      build BROT_PLAN.md in ONE background coding agent: test per leaf, ticks its boxes, raises /pr
@@ -50,7 +48,7 @@ The brot lifecycle — think → plan → build → clean:
 - The brot split (strict SRP): the PM (main thread) plans, watches, chats; ONE background coding agent (`/brot-bot`) does the full dev lifecycle (code → tests → `/pr` → `/merge`). The PM never codes/PRs/merges; the dev never does PM work.
 - Primitives (reused, add no content of their own): `/razor` (dense prose), `/brot-template humansteps` (manual steps in a fixed format).
 - `brot mode` and `/brot-board` are modes: invoked once, they hold the session's posture across turns until done.
-- `/brot-bot` assumes a `BROT_PLAN.md` exists — run `/brot-plan` first (think on `/brot-board` or plan with `/planit` upstream).
+- `/brot-bot` assumes a `BROT_PLAN.md` exists — run `/brot-plan` first (think on `/brot-board` upstream).
 - `/brot-dev` runs the app alongside the build; every brot skill reads its `.logs/` instead of starting its own server.
 - Verify-time (Claude Code bundled skills): `/run` launches the app, `/verify` runs + observes it, `/run-skill-generator` writes a project's per-app launch recipe once. App-specific launch (env, ports, shared daemons) lives in the project run-skill.
 
