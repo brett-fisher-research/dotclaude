@@ -27,22 +27,28 @@ Existing chain — each link is independently useful:
 The wider arc, from fuzzy thought to merged code:
 
 ```
-/duck      think out loud, no action (the off-ramp)
-/suggest   3-5 distinct routes for an ambiguous problem
-/diagrams  one ascii diagram (flowchart | sequence | mockup)
-/planit    plan in chat, approve
-/swarm     queen mode: run 2-3 parallel bees through task queues, gated on review
-  /bee     one worker bee: one worktree, one task → PR → pause; BEE.md survives death
-  /humancheck  run one bee's worktree (→ /run) so Brett verifies the live app by hand
-/pr        branch + commit + push + open PR
-/merge     squash-merge + return to base
-/wt        isolate work in a worktree; reap on merge
+/duck        think out loud, no action (the off-ramp)
+/suggest     3-5 distinct routes for an ambiguous problem
+/diagrams    one ascii diagram (flowchart | sequence | mockup)
+/planit      plan in chat, approve
+/brot-plan   break a goal into a recursive, deterministic plan → gitignored BROT_PLAN.md; enters brot mode
+/brot-start  execute BROT_PLAN.md: fan out file-disjoint subagent lanes, each /template goal + tests/; gated on review/merge
+/brot-done   end brot mode: confirm all boxes checked, delete the plan, exit
+/pr          branch + commit + push + open PR
+/merge       squash-merge + return to base
+/wt          isolate work in a worktree; reap on merge
+```
+
+The brot lifecycle — think → plan → swarm → clean:
+
+```
+/duck → /brot-plan → /brot-start → /brot-done
 ```
 
 - Primitives (reused, add no content of their own): `/razor` (dense prose), `/humansteps` (manual steps in a fixed format).
-- `/swarm` and `/duck` are modes: invoked once, they hold the session's posture across turns until done.
-- `/swarm` assumes a plan exists — run `/duck` or `/planit` first.
-- Verify-time (Claude Code bundled skills): `/run` launches the app, `/verify` runs + observes it, `/run-skill-generator` writes a project's per-app launch recipe once. `/humancheck` wraps `/run` for a chosen bee. App-specific launch (env, ports, shared daemons) lives in the project run-skill, never in `/swarm`.
+- `brot mode` and `/duck` are modes: invoked once, they hold the session's posture across turns until done.
+- `/brot-start` assumes a `BROT_PLAN.md` exists — run `/brot-plan` first (plan with `/duck` or `/planit` upstream).
+- Verify-time (Claude Code bundled skills): `/run` launches the app, `/verify` runs + observes it, `/run-skill-generator` writes a project's per-app launch recipe once. App-specific launch (env, ports, shared daemons) lives in the project run-skill.
 
 ## Prose rule
 
