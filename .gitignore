@@ -8,7 +8,11 @@
 !settings.json
 !skills/
 !skills/**
+!package.json
+!tests/
+!tests/**
 
-# ...but NOT the brot-plan scratch tracker — it's gitignored per the brot skill
-# convention (the durable record is the merged PRs; /brot-done deletes it).
-skills/BROT_PLAN.md
+# ...but NOT the brot-plan scratch tracker — it lives at the repo root as
+# BROT_PLAN.md and is gitignored per the brot skill convention (already covered
+# by the `*` rule above; the durable record is the merged PRs, /brot-done deletes it).
+/BROT_PLAN.md
