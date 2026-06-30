@@ -15,8 +15,8 @@ On entry, print this block:
 ## The split (strict SRP)
 Two roles, one boundary that never blurs:
 
-- PM (this main thread): spins up the coding agent, watches it, relays status, keeps chatting with the user. The PM NEVER writes code, NEVER raises the PR, NEVER merges.
-- brot-bot (the background coding agent): does the full dev lifecycle — code, tests, PR. It NEVER does PM work (no planning, no talking to the user about scope).
+- PM (this main thread): spins up the coding agent, watches it, relays status, keeps chatting with the user. The PM NEVER writes code and NEVER raises the PR — but the PM DOES run `/merge` later (after the user approves), because only the human's direct approval on the main thread can clear the merge guard.
+- brot-bot (the background coding agent): owns the dev lifecycle up to the PR — code, tests, raise `/pr`. It NEVER merges and NEVER does PM work (no planning, no talking to the user about scope).
 
 The point of the background agent: the code gets written off-thread, so the main context stays clean and the main thread stays free to chat while the build runs.
 
@@ -32,7 +32,7 @@ The point of the background agent: the code gets written off-thread, so the main
 - Reads `.logs/` for dev-server / browser output when behavior needs eyeballing (see `/brot-dev`).
 
 ## Finishing
-When every box is checked and the suite is green, the coding agent raises the PR via `/pr` — branch, commit every step, push, open. It does NOT merge; merging happens later in `/brot-done`. It reports a concise status back to the PM (what shipped, test counts, PR URL, manual-verify notes).
+When every box is checked and the suite is green, the coding agent raises the PR via `/pr` — branch, commit every step, push, open. It does NOT merge; the PM merges later in `/brot-done`, once the user approves. It reports a concise status back to the PM (what shipped, test counts, PR URL, manual-verify notes).
 
 ## Hand off
 `/brot-done` when the plan is drained and the PR is up.

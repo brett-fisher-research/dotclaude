@@ -32,7 +32,7 @@ The wider arc, from fuzzy thought to merged code:
 /brot-plan     break a goal into a recursive, deterministic plan → gitignored BROT_PLAN.md; enters brot mode
 /brot-dev      start the hot-reloaded dev server once in a bg agent; logs → .logs/
 /brot-bot      build BROT_PLAN.md in ONE background coding agent: test per leaf, ticks its boxes, raises /pr
-/brot-done     end brot mode: dev merges the PR, teardown bg agents, confirm boxes, delete the plan
+/brot-done     end brot mode: PM merges the PR (after user approval), teardown bg agents, confirm boxes, delete the plan
 /pr            branch + commit + push + open PR
 /merge         squash-merge + return to base
 /wt            isolate work in a worktree; reap on merge
@@ -45,7 +45,7 @@ The brot lifecycle — think → plan → build → clean:
 /brot-board → /brot-plan → /brot-bot → /brot-done
 ```
 
-- The brot split (strict SRP): the PM (main thread) plans, watches, chats; ONE background coding agent (`/brot-bot`) does the full dev lifecycle (code → tests → `/pr` → `/merge`). The PM never codes/PRs/merges; the dev never does PM work.
+- The brot split (strict SRP): the PM (main thread) plans, watches, chats, and runs `/merge` after the user approves; ONE background coding agent (`/brot-bot`) does the dev lifecycle up to the PR (code → tests → `/pr`). The PM never codes or raises the PR; the dev never merges and never does PM work. Merge lives on the main thread because only the human's direct approval there clears the merge guard.
 - Primitives (reused, add no content of their own): `/razor` (dense prose), `/brot-template humansteps` (manual steps in a fixed format).
 - `brot mode` and `/brot-board` are modes: invoked once, they hold the session's posture across turns until done.
 - `/brot-bot` assumes a `BROT_PLAN.md` exists — run `/brot-plan` first (think on `/brot-board` upstream).

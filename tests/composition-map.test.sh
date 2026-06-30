@@ -12,4 +12,7 @@ done
 for bad in '/duck' '/brot-start' '/humansteps' swarm wave 'fan out'; do
   grep -qi "$bad" "$C" && fail "forbidden present: $bad"
 done
+# Merge belongs to the PM/main thread, not the dev/coding agent.
+grep -qi 'dev merges' "$C" && fail "map still says the dev merges"
+grep -qi 'PM merges' "$C" || fail "map does not state the PM merges"
 exit 0

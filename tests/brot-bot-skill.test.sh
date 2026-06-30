@@ -11,6 +11,8 @@ grep -qi 'background' "$S" || fail "no background agent mention"
 grep -qi 'single\|one ' "$S" || fail "no single-agent emphasis"
 grep -q '/pr' "$S" || fail "no /pr mention"
 grep -qi 'SRP' "$S" || fail "no SRP mention"
+# The dev stops at the PR; it must not be framed as the merger.
+grep -qi 'NEVER merges' "$S" || fail "no explicit dev-never-merges boundary"
 for w in swarm wave lane 'fan out'; do
   grep -qi "$w" "$S" && fail "forbidden word present: $w"
 done
