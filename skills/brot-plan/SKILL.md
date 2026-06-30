@@ -1,13 +1,29 @@
 ---
 name: brot-plan
-description: Create a Mandelbrotian plan (brot plan for short). This means we break down a task of arbitrary size into 2-3 well-defined steps, then if those steps need additional clarity, we break those into 2-3 steps, etc. until we are left with the smallest units of work.
+description: Turn a goal (usually post-/duck) into a recursive, deterministic plan. Break the goal into big rocks, then recurse each rock into sub-steps until every leaf is an atomic unit of work with a verifiable done-gate. Enters persistent "brot mode". Use when the user says "/brot-plan" or wants a fractal, parallelizable plan before building.
 ---
 
 # Brot Plan
-A lot of plans struggle with ambiguity and complexity. This is where Brot plan comes in. We plan in a fractal manner: start by defining the 2-3 "big rocks" of the plan, then recursively clarify each step with additional steps until we are left with small units of work. 
+One job: turn a goal into a recursive, deterministic plan. This enters **brot mode** — a persistent build mode (plan → start) that survives turns and ends only at `/brot-done`, just like /duck persists until /duck-end.
 
-When coding for example, my goal may be "ship a web application to find the nearest coffee shop to you with a $10 monthly paid subscription". We may have steps like "1. Design the app with user flows and Figma diagrams, 2. Build and deploy the production app, 3. Make a profit on the app". Then further tasks would include planning the designs, talking through the flows, creating designs, deciding on infra, writing Terraform scripts to deploy the infra, creating a marketing plan, setting up recurring reminders to post on X or Reddit, etc.
+On entry, print this block:
 
-Notice how the tasks we create can involve further planning. When I later pick up the tasks we've created, I will then plan those out with the /brot-plan skill again.
+```
+🥨 BROT MODE · PLANNING
+```
 
-Use /template goal for defining each step of the plan. 
+## Plan recursively (the whole point)
+- Break the goal into 2-3 **big rocks**.
+- RECURSE each rock into 2-3 sub-steps, and each of those again, until every **leaf is atomic** — a single unit of work. The rule: don't stop at the top rocks (the old version's mistake); recurse all the way to atomic leaves.
+- EVERY leaf carries a deterministic, verifiable **done-gate**. Use `/template goal` as each leaf's contract.
+- Group leaves into dependency **waves** and, within a wave, file-disjoint **lanes** so `/brot-start` can parallelize them.
+- Early task: "stand up the `tests/` harness if absent."
+
+## Test convention
+All tests live in `tests/`. ONE command runs them all: `npm run test` (unit + shell tests). A unit is "done" only when its goal-template gates have passing tests AND the whole suite stays green.
+
+## Output
+PRINT the recursive plan in chat for approval. THEN write it to a **gitignored** `BROT_PLAN.md` at the project root: nested `- [ ]` checkboxes, including a verification box per leaf.
+
+## Hand off
+Stay in brot mode. `/brot-start` to execute the plan; `/brot-done` to clean up and exit.

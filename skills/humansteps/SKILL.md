@@ -39,5 +39,5 @@ One job: tell Brett exactly what HE must do by hand, in a predictable format —
 
 ## Composition
 
-- A primitive, callable anywhere — often after `/pr` (verify), or mid-`/swarm` when a bee or the queen hits an external gap.
+- A primitive, callable anywhere — often after `/pr` (verify), or whenever work hits an external/manual gap.
 - Written via `/razor`.
