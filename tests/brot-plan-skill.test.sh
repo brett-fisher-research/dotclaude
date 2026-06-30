@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# B2: brot-plan cites brot-bot + plan template, bash tests first-class, no swarm/wave/lane/fan out.
+# brot-plan cites brot-bot + plan template, bash tests first-class, no swarm/wave/lane/fan out.
 set -u
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 fail() { echo "  ASSERT FAILED: $1" >&2; exit 1; }

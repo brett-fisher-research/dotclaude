@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# B5: brot-done = coding agent runs /merge + dev-server teardown + delete BROT_PLAN.md.
+# brot-done = coding agent runs /merge + dev-server teardown + delete BROT_PLAN.md.
 set -u
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 fail() { echo "  ASSERT FAILED: $1" >&2; exit 1; }

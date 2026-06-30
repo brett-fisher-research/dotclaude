@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# B3: brot-bot = ONE background coding agent, /pr, strict SRP; no swarm/wave/lane.
+# brot-bot = ONE background coding agent, /pr, strict SRP; no swarm/wave/lane.
 set -u
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 fail() { echo "  ASSERT FAILED: $1" >&2; exit 1; }

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# B4: brot-dev mentions .logs + hot reload + background + browser logs.
+# brot-dev mentions .logs + hot reload + background + browser logs.
 set -u
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 fail() { echo "  ASSERT FAILED: $1" >&2; exit 1; }

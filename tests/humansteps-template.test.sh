@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# A4: humansteps template ports the fixed-format contract.
+# humansteps template ports the fixed-format contract.
 set -u
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 fail() { echo "  ASSERT FAILED: $1" >&2; exit 1; }

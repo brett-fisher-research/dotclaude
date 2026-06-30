@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# B1: brot-board is a permissive whiteboard; no-pressure-to-act + /brot-plan handoff; no old framing.
+# brot-board is a permissive whiteboard; no-pressure-to-act + /brot-plan handoff; no old framing.
 set -u
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 fail() { echo "  ASSERT FAILED: $1" >&2; exit 1; }

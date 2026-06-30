@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# C2: skills/CLAUDE.md composition map updated to brot-* family; no stale refs / swarm words.
+# skills/CLAUDE.md composition map updated to brot-* family; no stale refs / swarm words.
 set -u
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 fail() { echo "  ASSERT FAILED: $1" >&2; exit 1; }

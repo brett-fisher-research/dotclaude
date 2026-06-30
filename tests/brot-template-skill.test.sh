@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# A2: brot-template skill renamed from template; templates/ (incl goal.md) moved under it.
+# brot-template skill renamed from template; templates/ (incl goal.md) moved under it.
 set -u
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 fail() { echo "  ASSERT FAILED: $1" >&2; exit 1; }

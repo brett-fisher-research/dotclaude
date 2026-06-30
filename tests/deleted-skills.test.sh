@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# C1: replaced skills are gone.
+# replaced skills are gone.
 set -u
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 fail() { echo "  ASSERT FAILED: $1" >&2; exit 1; }

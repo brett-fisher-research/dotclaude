@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# A1: tests/run.sh runs every *.test.sh, exits nonzero on any failure, prints a summary.
+# tests/run.sh runs every *.test.sh, exits nonzero on any failure, prints a summary.
 set -u
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 RUN="$ROOT/tests/run.sh"
