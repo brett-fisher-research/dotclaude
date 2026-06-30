@@ -8,6 +8,9 @@
 !settings.json
 !skills/
 !skills/**
+!package.json
+!tests/
+!tests/**
 
 # ...but NOT the brot-plan scratch tracker — it lives at the repo root as
 # BROT_PLAN.md and is gitignored per the brot skill convention (already covered
