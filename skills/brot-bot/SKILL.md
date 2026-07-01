@@ -34,5 +34,7 @@ The point of the background agent: the code gets written off-thread, so the main
 ## Finishing
 When every box is checked and the suite is green, the coding agent raises the PR via `/pr` — branch, commit every step, push, open. It does NOT merge; the PM merges later in `/brot-done`, once the user approves. It reports a concise status back to the PM (what shipped, test counts, PR URL, manual-verify notes).
 
+- Commits and the PR are the durable public record — they must stand on their own. NEVER reference the plan's internal structure in them: no section names (e.g. "Section A"), no leaf labels (e.g. "A1"), no mention of `BROT_PLAN.md`. Describe WHAT changed and WHY, as if the plan never existed. The gitignored plan is scratch; it does not travel into git history.
+
 ## Hand off
 `/brot-done` when the plan is drained and the PR is up.
