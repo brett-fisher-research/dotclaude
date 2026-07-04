@@ -4,6 +4,7 @@
   "private": true,
   "description": "Brett's ~/.claude skills and their bash test harness.",
   "scripts": {
+    "setup": "node setup.js",
     "test": "bash tests/run.sh"
   }
 }
