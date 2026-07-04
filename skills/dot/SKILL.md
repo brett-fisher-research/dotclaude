@@ -1,42 +1,35 @@
 ---
 name: dot
-description: Manage the user's home-directory dotfiles, which are version-controlled in a bare git repository accessed via the `cfg` alias (NOT plain `git`). Use whenever working with tracked dotfiles in the home directory (e.g. ~/.zshrc, ~/.config/*), checking dotfile status/diffs, or committing and pushing config changes.
+description: Manage the user's ~/.claude config (settings + skills), version-controlled in this dotclaude repo — a brot-os tenant synced via /brot-sync. Use when working with tracked ~/.claude config: editing settings.json or skills, checking their status/diffs, or committing and syncing config changes. The repo is the single source of truth; never edit the installed ~/.claude copy.
 ---
 
-# Dotfiles (bare repo via `cfg`)
+# ~/.claude config (dotclaude tenant)
 
-The user's home directory (`$HOME`) is managed as a bare git repository at `~/.dotfiles/`.
-Do not use plain `git` for dotfile operations — the bare repo has no working tree of its own
-and plain `git` in `$HOME` will target the wrong (or no) repository.
+The user's `~/.claude` config lives in the `dotclaude` repo — a brot-os tenant cloned to
+`dotfiles/dotclaude`. The retired `cfg` bare-repo workflow (`~/.dotfiles` aliased as `cfg`) is
+gone; do not use it.
 
-## The `cfg` alias
+## The model
 
-All dotfile version-control operations go through the `cfg` alias, defined in `~/.zshrc`:
+- The repo is the single source of truth. Repo-root files map onto `~/.claude/`:
+  `settings.json` -> `~/.claude/settings.json`, `skills/**` -> `~/.claude/skills/**`.
+- Edit config in the repo, then re-sync. NEVER edit the installed `~/.claude` copy directly — a
+  sync overwrites it and the edit is lost.
+- Only the tracked surface is shared: `settings.json`, `skills/`, `package.json`, `tests/`,
+  `setup.js`, `README.md`. Everything else in `~/.claude` (projects, history, credentials,
+  MEMORY.md, untracked skills) is machine-local and never touched.
 
-```sh
-alias cfg='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-```
+## Install / sync
 
-`cfg` is a drop-in replacement for `git` — every git subcommand works:
+`npm run setup` (from the repo) is idempotent — it overwrites `~/.claude/settings.json` and
+copies every tracked skill file into `~/.claude/skills/**`, leaving all other `~/.claude` state
+untouched.
 
-```sh
-cfg status
-cfg diff
-cfg add ~/.zshrc
-cfg commit -m "message"
-cfg push
-```
+Do not cd into the tenant to pull or setup. From the brot-os root run `/brot-sync` (or
+`npm run sync`): it pulls the repo and drives its `npm run setup`.
 
-### Running `cfg` from a non-interactive shell
+## Version control
 
-The `cfg` alias is only loaded in interactive shells, so it is not available in scripts or
-in tools that run commands non-interactively (the alias will fail to expand). In those contexts,
-define a shell function or expand the alias manually:
-
-```sh
-CFG() { git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME" "$@"; }
-CFG status
-```
-
-(Defining a function named `cfg` can collide with the existing alias in zsh — use a different
-name like `CFG`, or run the full `git --git-dir=... --work-tree=...` command directly.)
+Git work happens inside the tenant repo (`dotfiles/dotclaude`) with plain `git`, on a feature
+branch, landed via `/pr` -> `/merge`. Then `/brot-sync` from the brot-os root installs it. Cross-
+machine: pull brot-os, `/brot-sync`, done.
