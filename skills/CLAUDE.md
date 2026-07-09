@@ -16,8 +16,6 @@ Existing chain — each link is independently useful:
 
 ```
 /linear  read/create ticket + In Progress
-/pr      branch + commit every step + push + open PR
-/merge   squash-merge + return to base
 ```
 
 - `/linear` is the only skill that touches Linear — the rest are tracker-agnostic.
@@ -33,8 +31,6 @@ The wider arc, from fuzzy thought to merged code:
 /brot-dev      start the hot-reloaded dev server once in a bg agent; logs → .logs/
 /brot-bot      build BROT_PLAN.md in ONE background coding agent: test per leaf, ticks its boxes, raises /pr
 /brot-done     end brot mode: PM merges the PR (after user approval), teardown bg agents, confirm boxes, delete the plan
-/pr            branch + commit + push + open PR
-/merge         squash-merge + return to base
 /wt            isolate work in a worktree; reap on merge
 /brot-template grab an output template (goal | plan | humansteps)
 ```
